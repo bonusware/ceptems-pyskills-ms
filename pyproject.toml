@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "ceptems-pyskill-service"
+version = "0.1.0"
+description = "ceptems Py Skill for app pack"
+authors = ["bonusware <amrsalem.eg@ceptems.com>"]
+readme = "README.md"
+packages = [{include = "src/main"}]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.12"
+flask = "^3.0.2"
+taskipy = "^1.12.2"
+python-dotenv = "^1.0.1"
+flasgger = "^0.9.7.1"
+
+
+[tool.bandit]
+targets = ["src/main"]
+
+[tool.pytest.ini_options]
+pythonpath = "src/main"
+
+[tool.taskipy.tasks]
+rest_server = { cmd = "python src/main/RestServer.py", help = "Runs the rest application" }
+code_quality_scan = { cmd = "ruff --select=ALL src/main", help = "Runs the Ruff code quality scan" }
+security_scan = { cmd = "bandit -c pyproject.toml -r .", help = "Runs the Bandit security scan" }
+code_formatting = { cmd = "black src/main", help = "Runs the Black code formatter"}
+coverage = { cmd = "pytest --cov=src --cov-report=html", help = "Runs the PyTest code coverage"}
+

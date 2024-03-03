@@ -1,0 +1,156 @@
+apiVersion: apps/v1
+kind: ceptems-app-pack
+metadata:
+  generator:
+    name: ceptems-ai-studio
+    version: 1.0.0
+  licenseKey: perm.lic
+
+apppack:
+  projectID: "proj001"
+  projectNumber: "PRJ001"
+  name: testify
+  publicName: "The TDLC Platform"
+  version: 1.0.0
+  description: AI Testify App Pack
+  studioVersion: 1.0.0
+  lightServerVersion: 1.0.0
+
+  models:
+    - modelID: "mixtral-8x7b-32768"
+      modelName: "mixtral-8x7b-32768"
+      modelFamily: "groq"
+      apiKey: "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"
+    
+    - modelID: "LLaMA2-70b-chat"
+      modelName: "llama2-70b-4096"
+      modelFamily: "groq"
+      apiKey: "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"
+      modelSettings: 
+        generation_config:
+            temperature: 0.5
+            max_tokens: 1024
+            top_p: 1
+            stop: None
+            stream: False
+  
+    - modelID: "gemini-1.0-pro"
+      modelName: "gemini-1.0-pro"
+      modelFamily: "gemini"
+      apiKey: "AIzaSyAimOyJE5s-SMDdKHAlbr6GVKJBO2IxOSU"
+      modelSettings: 
+        generation_config:
+            temperature: 0.9
+            top_p: 1
+            top_k: 1
+            max_output_tokens: 2048
+        safety_settings:
+          - category: "HARM_CATEGORY_HARASSMENT"
+            threshold: "BLOCK_ONLY_HIGH"
+          - category: "HARM_CATEGORY_HATE_SPEECH"
+            threshold: "BLOCK_ONLY_HIGH"
+          - category: "HARM_CATEGORY_SEXUALLY_EXPLICIT"
+            threshold: "BLOCK_ONLY_HIGH"
+          - category: "HARM_CATEGORY_DANGEROUS_CONTENT"
+            threshold: "BLOCK_ONLY_HIGH"
+    - modelID: "gpt-3.0-"
+      modelName: "GPT 3"
+      modelFamily: "GPT"
+      apiKey: "AIzaSyAimOyJE5s-SMDdKHAlbr6GVKJBO2IxOSU"
+      modelSettings: 
+          
+
+  skills:
+    - skillID: "skill001"
+      skillName: "Skill 1"
+      skillData:
+        - skillKey: "Key 1"
+          skillValue: "Value 1"
+
+  agents:
+    - agentID: "agent001"
+      agentName: "Agent 1"
+      modelID: "gemini-1.0-pro"
+      systemMessage: >
+        You're an experienced quality engineer who can assist to genrate software test cases and test scripts.
+      humanInput: true
+      inputSchemaID: "schema001"
+      maxReplies: 5
+      prompt:
+        - promptName: "Generate Test Case"
+          promptID: "GENERATE_TEST_CASE"
+          promptBody: >
+            help me generate functional test cases for the following requirements of a software application
+            
+      skills:
+        - "skill001"
+
+  modules:
+    - moduleID: "app001"
+      moduleName: "Test Case Manager"
+      features:
+        - featureID: "feat001"
+          featureName: "Test Case Generation"
+          contextflows:
+            - flowID: "flowA"
+              flowName: "Flow A"
+              contextScope: "Scope for Test Case Generation"
+              agents:
+                - "agent001"
+
+  permissions:
+    - member: "User A"
+      permissionRole: "admin"
+
+  serviceAccounts:
+    - accountName: "Service Account 1"
+      accountPrincipal: "service_account_1@example.com"
+      accountRole: "role1"
+
+  assets:
+    - assetID: "asset001"
+      assetName: "Asset 1"
+      content: "Sample content for Asset 1"
+
+  jsonSchema:
+    - schemaID: "schema001"
+      schemaName: "Schema 1"
+      featureID: "feat001"
+      schemaPayload: >
+        {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "type": "object",
+          "properties": {
+            "userStory": {
+              "type": "string"
+            },
+            "acceptanceCriteria": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "luckyNumber": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "userStory",
+            "acceptanceCriteria",
+            "luckyNumber"
+          ]
+        }
+      data: >
+        {
+          "userStory":"Hey this is your requirements",
+          "acceptanceCriteria":["AC1", "AC2", "AC3"],
+          "luckyNumber": 9
+        }
